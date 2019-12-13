@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+	<head>
+	
+		<meta charset="UTF-8">
+		<title>Document</title>
+	
+		<style>
+			/*底部容器*/
+			.box{
+				
+				width: 300px;
+				height: 300px;
+				position: absolute;
+				
+			}
+			/*地雷方块*/
+			.box div{
+				
+				width:30px;
+				height:30px;
+				background-color: #666666;
+				border:2px solid #666;
+				border-top-color: #fff;
+				border-left-color: #fff;
+				float:left;
+				text-align: center;
+				box-sizing: border-box;
+			}
+			/*成功展示*/
+			.suceen{
+				width: 300px;
+				height: 300px;
+				position: absolute;
+				font-weight: 700;
+				font-size: 30px;
+				color: chocolate;
+				line-height: 300px;
+				text-align: center;
+				background-color: red;
+				z-index: 2;
+				opacity: 0.8;
+				display: none;
+			}
+			
+			/*失败展示框*/
+			.s{
+				width: 300px;
+				height: 300px;
+				position: absolute;
+				font-weight: 700;
+				font-size: 30px;
+				color: darkblue;
+				line-height: 300px;
+				text-align: center;
+				background-color: red;
+				z-index: 2;
+				opacity: 0.8;
+				display: none;
+			}
+			
+			/*地雷数目展示*/
+			#span{
+				width: 200px;
+				position: absolute;
+				top: 320px;
+			
+			}
+		
+		</style>
+	</head>
+
+	<body>
+		<!--所用容器展示-->
+		<div class="suceen">过关啦！任意键继续！</div>
+		<div class="box"></div>
+		<div class="s">失败了！任意键继续</div>
+		<span id='span'>雷块：10</span>
+	
+			<script>
+				//定义一些全域对象和参数
+				var box = document.getElementsByClassName('box')[0];
+				var span = document.getElementById('span');
+				var k = document.getElementsByClassName('suceen')[0];
+				var s = document.getElementsByClassName('s')[0];
+				var arr = [];
+				var d = 10;
+				var c = 10;
+				//方法调用
+				start();
+				lei();
+				click();
+				//游戏开始的初始化
+				function start(){//初始化区域建立一个10*10的二维数组
+					for(var i=0; i<10; i++){
+						for(var j=0; j<10; j++){
+							//创建小块
+							var div = document.createElement('div');
+							div.setAttribute('id', i + '-' + j);
+							//将小块的class名设置为div
+							div.classList.add('div');
+							//将小块添加到大盘子中
+							box.appendChild(div);
+						}
+					}
+				}
+				
+				function lei(){
+					var a = 0;
+					for(var i=0; i<10; i++){
+						//随机生成数也就是雷的数组下标
+						var n = Math.floor(Math.random()*100);
+						
+						//防止出现同一位置的累
+						for(var j=0; j<arr.length; j++){//新生成的雷与数组雷的值比较，遇到相同就跳上一个循环，继续生产雷块。
+							if(n == arr[j]){
+								i--;
+								a = 1;
+								break;
+							}
+						}
+						if(a == 0){
+							arr.push(n);
+						}
+						a = 0;
+					}
+					//输出随机数的数组
+					for(var i=0; i<10; i++){
+						console.log(arr[i]);
+					}
+					//获取所有的块
+					var div = document.querySelectorAll('.box div');
+					for(var i=0; i<10; i++){//通过for把雷放入格子中
+						div[arr[i]].classList.add('lei');
+					}
+				
+				}
+			//鼠标点击的选择区分的方法
+			function click() {
+				//如果点击到中雷页面之后的部署
+				s.onclick = function () {
+					//清除布局样式
+					s.style.display = 'none';
+					//循环删除BOX节点的孩子节点
+					while(box.hasChildNodes()){
+						box.removeChild(box.firstChild);
+					}
+					//初始化数据重新开始
+					arr = [];
+					d = 10;
+					c = 10;
+					span.innerHTML = d;
+					start();
+					lei();
+					click();
+				}
+				s.oncontextmenu = function () {
+					return false;
+				}
+				//成功过关之后的部署
+				k.onclick = function () {
+					k.style.display = 'none';
+					while(box.hasChildNodes()){
+						box.removeChild(box.firstChild);
+					}
+					arr = [];
+					d = 10;
+					c = 10;
+					span.innerHTML = d;
+					start();
+					lei();
+					click();
+				}
+				
+				k.oncontextmenu = function () {
+					return false;
+				}
+				box.oncontextmenu = function () {
+					return false;
+				}
+				//当box获得鼠标事件的判断选择
+				box.onmousedown = function (e) {
+					//触发事件函数给event对象
+					var event = e.target;
+					//与鼠标事件有关，兼容性强。
+					if (e.which == 1 && event.num != 1) {
+						leftClick(event);
+					} else if (e.which == 3) {
+						rightClick(event);
+					}
+				}
+			}
+			
+			//传入被点击的元素对象e
+			function leftClick(e){
+				//获取到文档中所有ID为div的元素
+				var dives = document.querySelectorAll('.box div');
+				//获得class名为lei的元素数组对象
+				var lei = document.getElementsByClassName('lei');
+				if(e.classList.contains('lei')){
+					console.log('game over');
+					for(var i=0; i<10; i++){
+						//显示所有的雷块
+						lei[i].style.backgroundColor = 'red';
+						lei[i].innerHTML = '雷';
+						s.style.display = 'block';
+					}
+			
+				}else {//如果点击对正常块
+					//被选元素周围的雷数目
+					var n = 0;
+					//获得元素的被点击元素的对象以及ID
+					var posArr = e && e.getAttribute('id').split('-');//去除'-'字符获得该元素的下标
+					//分离出X,Y参数
+					var X = posArr && +posArr[0];//jS的逻辑运算符当posArr成立会继续往后判断，若结果为true，执行最后一个式子，将posArr[0]赋值給X。
+					var Y = posArr && +posArr[1];
+					//遍历被选中的点的八面是否有雷
+					for(var i = X-1; i <= X + 1; i++){
+						for(var j = Y-1; j <= Y + 1; j++){
+							var aroundBox = document.getElementById(i + '-' + j);
+							//依此遍历查看时候有雷
+							if(aroundBox && aroundBox.classList.contains('lei')){
+								//有雷时计数赋值给被选中元素
+								n++;
+							}
+						}
+					}
+					e && (e.innerHTML = n);
+					//制作翻开的白色效果
+					e && (e.style.backgroundColor = '#fff');
+					e.num = 1;
+					console.log(e.num);
+					//当摸到元素为0时的操作
+					if(n == 0){
+						for(var i = X-1; i <= X + 1; i++){
+							for(var j = Y-1; j <= Y + 1; j++){
+								var nearBox = document.getElementById(i + '-' + j);
+								if(nearBox && nearBox.length != 0){
+									if(!nearBox.classList.contains('one')){//判断是否存在one类名
+										nearBox.classList.add('one');//没有的话添加one类名（这是关键避免死循环）
+										leftClick(nearBox);	//递归调用（深度优先算法）
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			function rightClick(e){
+				//查找雷的元素，获得一个雷块的数组。
+				var lei = document.getElementsByClassName('lei');
+				//判断还有排雷的次数
+				if(c>0 && e.num != 1){
+					c--;//次数减一
+					e.style.backgroundColor = 'blue';
+					e.num = 1;
+					if(e.classList.contains('lei')){
+						d--;//雷块的少一
+						span.innerHTML = d;
+					}
+					//当雷块被排完时弹出胜利
+					if(d == 0){
+						console.log('suceeen');
+						//胜利面板被显示
+						k.style.display = 'block';
+						//显示所有的雷块
+						for(var i=0; i<10; i++){
+							lei[i].style.backgroundColor = 'red';
+							lei[i].innerHTML = '雷';
+						}
+					}
+				}
+			}
+			</script>
+	
+	</body>
+
+</html>

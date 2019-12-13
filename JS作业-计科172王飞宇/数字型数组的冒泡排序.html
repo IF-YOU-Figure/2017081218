@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			function numSorting(array){
+				for(var i=0;i<array.length;i++){
+					//无序区的第一个元素
+					for(var j=i+1;j<array.length;j++){
+						//倒序排序
+						if(array[j]<array[i]){
+							var temp=array[i];
+							array[i]=array[j];
+							array[j]=temp;	
+						}	
+					}
+				}
+				return array;
+			}
+			//设置整型数组
+			var a=[2,4,3,5,1];
+			var result=numSorting(a);
+			document.write(result);
+			
+		</script>
+	</body>
+</html>

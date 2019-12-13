@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.box{
+				padding: 8px;
+				background-color:lemonchiffon;
+				width: 300px;
+				height: 400px;
+				margin: 0 auto;
+				border:2px solid #666666;
+				border-top-color: darkgrey;
+				border-left-color: darkgrey;
+				text-align: center;
+				box-sizing: border-box;
+			}
+			.topBox{
+				padding: 15px;
+			}
+			.timeBox{
+				position: relative;
+				left: 10px;
+				float: left;
+				font-size: 14px;
+			}
+			.startBox{
+				float: right;
+			}
+			.inputBox{
+				display: flex;
+				margin-left: 30px;
+				margin-top: 40px;
+				justify-content: space-around;
+			}
+			.inputBox input{
+				margin-right: 20px;
+				width: 40px;
+			}
+			.guess{
+				position: relative;
+				top: 10px;
+				left: 5px;
+			}
+			.resultBox{
+				position: relative;
+				top: 10px;
+				
+			}
+			.resultBox p{
+				position: relative;
+				margin: 0 auto;
+				background-color: floralwhite;
+				width: 80%;
+				height: 15px;
+				margin-top: 10px;
+				border-radius:12px;
+			}	
+		</style>
+		
+	</head>
+	<body>
+		<script>
+			function guessButton(){
+				
+			}
+			function startButton(){
+				var n = Math.floor(Math.random()*9000+1000);//点击开始按钮随机生成一个4位数
+				console.log("获得随机数："+n);
+			}
+		</script>
+		
+		
+		<div class="box">
+			<div class="topBox">
+				<span class="timeBox">可猜次数：10</span>
+				<span class="startBox"><button onclick="startButton()">开始</button></span>
+			</div>
+			<div class="inputBox">
+				<input name="one" />
+				<input name="two" />
+				<input name="three" />
+				<input name="four" />	
+			</div>	
+			<button class="guess" onclick="guessButton()">猜测</button>
+			<div class="resultBox">
+				<p></p>
+				<p></p>
+				<p></p>
+				<p></p>
+				<p></p>
+				<p></p>
+				<p></p>
+				<p></p>
+				<p></p>
+				<p></p>
+			</div>
+			
+		</div>
+		
+		
+	</body>
+</html>

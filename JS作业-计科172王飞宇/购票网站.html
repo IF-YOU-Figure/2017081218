@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>购票</title>
+		<style>
+		*{
+			margin: 0;
+			padding: 0;
+			border: 0;
+		}
+		.bgBox{
+			width: 600px;
+			height: 100%;
+			margin: 0 auto;
+			padding: 3px;
+			text-align: center;
+			background-image: url(../img/聊天背景图片.jpg);
+			-moz-background-size:100% 100%; background-size:100% 100%;
+			/*background-color: salmon;*/
+		}
+		.mainBox{
+			width: 450px;
+			height: 100%;
+			padding-bottom: 40px;
+			margin: 0 auto;
+			padding: 5px;
+			margin-bottom: 20px;
+			position: relative;
+			background-color: white;
+			overflow: hidden;
+	    	text-overflow: ellipsis;
+	    	white-space: nowrap;
+		}
+		.mainBox span{
+			overflow: hidden;
+	    	text-overflow: ellipsis;
+	    	white-space: nowrap;
+		}
+		.mainBox div{
+			overflow: hidden;
+	    	text-overflow: ellipsis;
+	    	white-space: nowrap;
+		}
+		.jipiaoyuding{
+			text-align: left;
+			color: dodgerblue;
+		}
+		.hanbanxinxiTop{
+			text-align: right;
+			color: orange;
+		}
+		.hanbanxinxi{
+			display: flex;
+			align-items: center;
+			height: 80px;
+		}
+		.content{
+			display: flex;
+			justify-content: space-between;
+		}
+		.title{
+			width: 100%;
+			text-align: left;
+			background-color: #03B8CF;
+		}
+		.logo{
+			padding: 10px;
+			width: 30px;
+			height: 30px;
+		}
+		.hangban{
+			display: flex;
+			text-align: left;
+			flex-direction: column;
+			font-size: 0.6em;
+			width: 200px;
+		}
+		.shijianxinxi{
+			width: 200px;
+			display: flex;
+			flex-direction: column;
+			font-size: 0.5em;	
+		}
+		.zonghefeiyong{
+			text-align: left;
+			font-size: 0.6em;
+		}
+		.tip{
+			padding: 3px;
+			font-size: 0.8em;
+			text-align: left;
+			background-color: #03B8CF;
+		}
+		.personDiv{
+			padding: 5px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+		.personBOx{
+			display: flex;
+		}
+		.personPage{
+			padding: 5px;
+			font-size: 0.6em;
+		}
+		.pageTop{
+			display: flex;
+			background-color: lightgray;
+			justify-content: space-between;
+			align-items: center;
+		}
+		.personImformation{
+			padding: 5px;
+			border: 0.5px solid darkgray;
+			height: 80px;
+		}
+			<img src="img/聊天背景图片.jpg" height="1245" width="700"/></style>
+		<script src="../../js/jquery.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/layer/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+		<script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js"></script>
+	</head>
+	
+	<body>
+		<div class="bgBox">
+			<h2>机票 · 联萌</h2>
+			<div class="mainBox">
+				<div class="jipiaoyuding"><h4>机票预定</h4></div>
+				<div class="hanbanxinxiTop">选择 - 预定 - 核对 - 支付 -完成</div>
+				<div class="title">航班信息</div>
+				<div class="hanbanxinxi">	
+					<div class="content">
+						<div class="logo"><img src="../../img/飞机.svg" alt="" width="100%" height="100%"/></div>
+						<div class="hangban">
+							<span>海南航空：NP007      修改航班：[退 改 签]</span>
+							<span>飞机机型：T3经停      修改座位</span>
+						</div>
+						<div class="shijianxinxi">
+							<span>2019年12月6号 9点30    周水子大机场  成人票：521元</span>
+							<span>2016年12月6号 9点30    南宁吴圩机场  已含税：000元</span>
+						</div>
+					</div>
+					<hr />
+				</div>
+				<div class="zonghefeiyong">总价：521元   人数：1人 [机票明细]</div>
+				<div class="tip">乘客信息：请留意填写重要身份信息!</div>
+				<div class="personDiv">
+					<span style="font-size: 0.5em;">常用练习人中搜索</span>
+					<input type="text" style="border: 0.8px solid darkgray;" />
+					<div class="personBOx">
+						<div class="person" style="display: flex; align-items: center;">
+							<input onchange="oftenPerson(this)" type="checkbox" value="猪琦琦"/>
+							<span style="font-size: 0.5em;">奥利给</span>
+						</div>
+						<div class="person" style="display: flex; align-items: center;">
+							<input onchange="oftenPerson(this)" type="checkbox" value="花哥哥"/>
+							<span style="font-size: 0.5em;">大哥大</span>
+						</div>
+						<div class="person" style="display: flex; align-items: center;">
+							<input onchange="oftenPerson(this)" type="checkbox" value="丘比特"/>
+							<span style="font-size: 0.5em;">二龙湖浩哥</span>
+						</div>
+					</div>
+				</div>
+				<div class="personPg"><div class="personPage"><div class="pageTop"><span>乘客1</span><div style="position: relative; right: -100px; display: flex; align-items: center;"><input type="checkbox" /><span>保存到常用联系人</span></div><span id="closeIcon" onclick="delPerson(this)"><img src="../../img/close.svg" alt="" width="25px" height="25px"/></span></div><div class="personImformation"><div style="float: left;"><span>* 购票类型：<input class="piao" value="" type="text" style="border: 0.5px solid darkgrey;"/> ¥521/成人票（含税）   更改类型</span></div><div style="float: left;"><span>* 乘客姓名：<input class="ming" value="" type="text" style="border: 0.5px solid darkgrey;"/></span></div><div style="float: left;"><span>* 身份证号：<input class="shen" value="" type="text" style="border: 0.5px solid darkgrey;"/></span></div></div></div></div>
+				<!--添加乘客岸按钮-->
+				<button style="background: orange; padding: 3px; position: relative; right: -189px;" onclick="addPerson()">添加乘客</button>
+				<div class="connectPerson" style="font-size: 0.6em; padding: 5px;">
+					<div class="pageTop" style="background-color: cornflowerblue;">
+						<span>添加联系人信息</span>
+						
+					</div>
+					<div class="personImformation">
+						<div style="float: left;">
+							<span>* 联系人员：<input class="ming" type="text" style="border: 0.5px solid darkgrey;"/></span>
+						</div>
+						<div style="float: left;">
+							<span>* 手机号码：<input class="connPhone" type="text" style="border: 0.5px solid darkgrey;"/></span>
+						</div>
+						
+						<div style="float: left;">
+							<span>* 电子邮箱：<input class="connEmail" type="text" style="border: 0.5px solid darkgrey;"/></span>
+						</div>
+					</div>
+				</div>
+				<div style="">
+					<button style="background: orange; padding: 3px;">上一步</button>
+					<button style="background: orange; padding: 3px;" onclick="submitCheck()">下一步</button>
+				</div>
+			</div>
+		</div>
+		<script>
+			//添加乘客代码段
+			function addPerson(){
+
+				var pageList = document.querySelectorAll('.personPage');
+				console.log(pageList.length);
+				var num = ++pageList.length;
+				var sum = num*521;
+				document.getElementsByClassName('zonghefeiyong')[0].innerHTML = "总价："+sum+"元   人数："+num+"人 [机票明细]";
+		
+				var personGroup = document.getElementsByClassName('personPg')[0];
+				var newElement = document.createElement("div");
+				newElement.setAttribute('class','personPage');
+				newElement.innerHTML = '<div class="pageTop"><span>乘客'+num+'</span><div style="position: relative; right: -100px; display: flex; align-items: center;"><input type="checkbox" /><span>保存到常用联系人</span></div><span id="closeIcon" onclick="delPerson(this)"><img src="../../img/close.svg" alt=""  width="25px" height="25px"/></span></div><div class="personImformation"><div style="float: left;"><span>* 购票类型：<input class="piao" type="text" style="border: 0.5px solid darkgrey;"/> ¥521/成人票（含税）   更改类型</span></div><div style="float: left;"><span>* 乘客姓名：<input class="ming" value="" type="text" style="border: 0.5px solid darkgrey;"/></span></div><div style="float: left;"><span>* 身份证号：<input class="shen" type="text" style="border: 0.5px solid darkgrey;"/></span></div></div>';
+				personGroup.appendChild(newElement);
+			}
+			//删除操作代码段
+			function delPerson(e){
+				console.log("关闭按钮被点击！");
+				console.log(e);
+				var onebox = e.parentNode;
+				var dele = onebox.parentNode;
+				var parentbox = dele.parentNode;
+				parentbox.removeChild(dele);
+				
+				var pageList = document.querySelectorAll('.personPage');
+				console.log(pageList.length);
+				var num = pageList.length--;
+				var sum = num*521;
+				document.getElementsByClassName('zonghefeiyong')[0].innerHTML = "总价："+sum+"元   人数："+num+"人 [机票明细]";
+			}
+			//常用联系人添加
+			function oftenPerson(e){
+				console.log(e);
+				if(e.checked == true){
+		       		e.checked == false;
+		       		console.log("选中！");
+		       		if(e.value == "猪琦琦"){
+		       			var pageList = document.querySelectorAll('.personPage');
+						console.log(pageList.length);
+						var num = ++pageList.length;
+						var sum = num*521;
+						document.getElementsByClassName('zonghefeiyong')[0].innerHTML = "总价："+sum+"元   人数："+num+"人 [机票明细]";
+				
+						var personGroup = document.getElementsByClassName('personPg')[0];
+						var newElement = document.createElement("div");
+						newElement.setAttribute('class','personPage');
+						newElement.innerHTML = '<div class="pageTop"><span>乘客'+num+'</span><div style="position: relative; right: -100px; display: flex; align-items: center;"><input type="checkbox" /><span>保存到常用联系人</span></div><span id="closeIcon" onclick="delPerson(this)"><img src="../../img/close.svg" alt=""  width="25px" height="25px"/></span></div><div class="personImformation"><div style="float: left;"><span>* 购票类型：<input class="piao" value="成人票" type="text" style="border: 0.5px solid darkgrey;"/> ¥521/成人票（含税）   更改类型</span></div><div style="float: left;"><span>* 乘客姓名：<input class="ming" value="猪琦琦" type="text" style="border: 0.5px solid darkgrey;"/></span></div><div style="float: left;"><span>* 身份证号：<input class="shen" value="452723199805211314" type="text" style="border: 0.5px solid darkgrey;"/></span></div></div>';
+						personGroup.appendChild(newElement);
+		       		}else if(e.value == "花哥哥"){
+		       			var pageList = document.querySelectorAll('.personPage');
+						console.log(pageList.length);
+						var num = ++pageList.length;
+						var sum = num*521;
+						document.getElementsByClassName('zonghefeiyong')[0].innerHTML = "总价："+sum+"元   人数："+num+"人 [机票明细]";
+				
+						var personGroup = document.getElementsByClassName('personPg')[0];
+						var newElement = document.createElement("div");
+						newElement.setAttribute('class','personPage');
+						newElement.innerHTML = '<div class="pageTop"><span>乘客'+num+'</span><div style="position: relative; right: -100px; display: flex; align-items: center;"><input type="checkbox" /><span>保存到常用联系人</span></div><span id="closeIcon" onclick="delPerson(this)"><img src="../../img/close.svg" alt=""  width="25px" height="25px"/></span></div><div class="personImformation"><div style="float: left;"><span>* 购票类型：<input class="piao" value="成人票" type="text" style="border: 0.5px solid darkgrey;"/> ¥521/成人票（含税）   更改类型</span></div><div style="float: left;"><span>* 乘客姓名：<input class="ming" value="花哥哥" type="text" style="border: 0.5px solid darkgrey;"/></span></div><div style="float: left;"><span>* 身份证号：<input class="shen" value="452723199805219999" type="text" style="border: 0.5px solid darkgrey;"/></span></div></div>';
+						personGroup.appendChild(newElement);	
+		       		}else if(e.value == "丘比特"){
+		       			var pageList = document.querySelectorAll('.personPage');
+						console.log(pageList.length);
+						var num = ++pageList.length;
+						var sum = num*521;
+						document.getElementsByClassName('zonghefeiyong')[0].innerHTML = "总价："+sum+"元   人数："+num+"人 [机票明细]";
+				
+						var personGroup = document.getElementsByClassName('personPg')[0];
+						var newElement = document.createElement("div");
+						newElement.setAttribute('class','personPage');
+						newElement.innerHTML = '<div class="pageTop"><span>乘客'+num+'</span><div style="position: relative; right: -100px; display: flex; align-items: center;"><input type="checkbox" /><span>保存到常用联系人</span></div><span id="closeIcon" onclick="delPerson(this)"><img src="../../img/close.svg" alt=""  width="25px" height="25px"/></span></div><div class="personImformation"><div style="float: left;"><span>* 购票类型：<input class="piao" value="成人票" type="text" style="border: 0.5px solid darkgrey;"/> ¥521/成人票（含税）   更改类型</span></div><div style="float: left;"><span>* 乘客姓名：<input class="ming" value="丘比特" type="text" style="border: 0.5px solid darkgrey;"/></span></div><div style="float: left;"><span>* 身份证号：<input class="shen" value="452723199805218888" type="text" style="border: 0.5px solid darkgrey;"/></span></div></div>';
+						personGroup.appendChild(newElement);
+		       			
+		       		}
+			    }else{
+			    	e.checked == true;
+			        console.log("选中取消！");
+			        //进行卡片的移除
+			        //乘客列表
+			        var Lists = $("div").children(".personPage");
+			        console.log(Lists);
+			        for(let i in Lists ) {  
+			        	//设置标记 遍历找到名字
+				    	console.log(Lists [i].childNodes[1].childNodes[1].childNodes[0].childNodes[1].value);
+				    	var delName = Lists [i].childNodes[1].childNodes[1].childNodes[0].childNodes[1].value;
+				    	if(delName == e.value){
+				    		var par = Lists [i].parentNode;
+			            	par.removeChild(Lists [i]);
+			            	var pageList = document.querySelectorAll('.personPage');
+							console.log(pageList.length);
+							var num = pageList.length--;
+							var sum = num*521;
+							document.getElementsByClassName('zonghefeiyong')[0].innerHTML = "总价："+sum+"元   人数："+num+"人 [机票明细]";
+				    	}
+				    };    
+//			       	 清除对象数组多出的text标签
+//			        for(i = 0; i < pageList.length; i++) {
+//			        	//获取到空白的texr标签对象
+//			            if(pageList[i].nodeName == "#text") {
+//			            	var par = pageList[i].parentNode;
+//			            	par.removeChild(pageList[i]);
+//			            }
+//			        }        
+			    }	
+			}
+			//最后校验
+			function submitCheck(){
+				//获取相对应的文本框对象数组
+				var piaoList = document.querySelectorAll('.piao');
+				console.log(piaoList);
+				for(let i in piaoList){
+					if(piaoList[i].value ==null || piaoList[i].value !=="成人票"){
+						piaoList[i].value = "仅限成人票~"
+						piaoList[i].style = "border: 0.5px solid red;"
+					}
+				}
+				//获取名字输入框
+				var mingList = document.querySelectorAll('.ming');
+				console.log(mingList);
+				for(let i in mingList){
+					var ct =  mingList[i].value;
+					//非中文的表达式
+			 		var patt = /[^\u4E00-\u9FA5]/g;
+			 		var isOk = patt.test(ct);
+			 		if(isOk || ct == ""){//查到有非中文的字符
+						mingList[i].value = "仅限中文汉字名~";
+						mingList[i].style = "border: 0.5px solid red;"
+						
+			 		}
+				}
+				//获取身份证输入框
+				var shenList = document.querySelectorAll('.shen');
+				console.log(shenList);
+				for(let i in shenList){
+					var ct =  shenList[i].value;
+					//非中文的表达式
+			 		var patt = /^\d{15}|\d{}18$/;
+			 		var isOk = patt.test(ct);
+			 		console.log(isOk);
+			 		if(isOk){//
+						
+			 		}else{
+			 			shenList[i].value = "请输入15或者18位身份证数字号码~"
+						shenList[i].style = "border: 0.5px solid red;"
+			 		}
+				}
+				//联系人员的电话号码
+				var phoneList = document.querySelectorAll('.connPhone');
+				console.log(phoneList);
+				for(let i in phoneList){
+					var ct =  phoneList[i].value;
+					//非中文的表达式
+			 		var patt = /^\d{11,}$/;
+			 		var isOk = patt.test(ct);
+			 		console.log(isOk);
+			 		if(isOk){//
+						
+			 		}else{
+			 			phoneList[i].value = "电话号码格式不正确！"
+						phoneList[i].style = "border: 0.5px solid red;"
+			 		}
+				}
+				//联系人员的电子邮件
+				var emailList = document.querySelectorAll('.connEmail');
+				console.log(emailList);
+				for(let i in emailList){
+					var ct =  emailList[i].value;
+					//非中文的表达式
+			 		var patt = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+			 		var isOk = patt.test(ct);
+			 		console.log(isOk);
+			 		if(isOk){//
+						
+			 		}else{
+			 			emailList[i].value = "电子邮件格式不正确！"
+						emailList[i].style = "border: 0.5px solid red;"
+			 		}
+				}
+				
+				
+			}
+		</script>
+	</body>
+</html>
